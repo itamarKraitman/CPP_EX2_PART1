@@ -15,8 +15,8 @@ namespace ariel{
 
         Player(string name); // constructor
 
-        void stacksize();
+        int stacksize();
 
-        void cardsTaken();
+        int cardesTaken();
     };
 }

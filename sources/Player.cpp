@@ -7,7 +7,7 @@ using namespace std;
 namespace ariel {
     Player::Player(string name) {}
 
-    void Player::stacksize() {}
+    int Player::stacksize() {}
 
-    void Player::cardsTaken() {}
+    int Player::cardesTaken() {}
 }
