@@ -11,6 +11,7 @@ namespace ariel {
     class Game {
         Player p1;
         Player p2;
+        string winner;
 
         public:
 
@@ -27,5 +28,7 @@ namespace ariel {
         void printLog();
 
         void printStats();
+
+        Player getWinner();
     };
 }
