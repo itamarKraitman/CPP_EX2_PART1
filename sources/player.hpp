@@ -10,6 +10,10 @@ namespace ariel{
         string name;
         int stack;
         int taken;
+        double winRate;
+        int cardsWon;
+        double drawRate;
+        int amountOfDraws;
 
         public:
         

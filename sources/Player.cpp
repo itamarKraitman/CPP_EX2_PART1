@@ -1,5 +1,4 @@
 
-
 #include <iostream>
 #include <string>
 #include "player.hpp"
@@ -11,6 +10,8 @@ namespace ariel {
     Player::Player() {}
 
     Player::Player(string name) {}
+
+    string getName() {return "!";}
 
     int Player::stacksize() {return 1;}
 

@@ -82,8 +82,8 @@ TEST_CASE("Cards's to_String returns matchig string")
 TEST_CASE("Player is constructed as expected")
 {
     Player player("Moshe");
-    CHECK_EQ(player.cardesTaken(), 0);
-    CHECK_EQ(player.stacksize(), 26);
+    CHECK_EQ(player.cardesTaken(), 0); // in the beggining of the game each player has 28 cards and did'nt take any
+    CHECK_EQ(player.stacksize(), 28);
 }
 
 // test Game
@@ -92,13 +92,14 @@ Player p1("Moshe");
 Player p2("Avi");
 Game game(p1, p2);
 
-TEST_CASE("Game stopped when one player wins- his stacks size is 0")
+// test both playAll and getWinner
+TEST_CASE("Game stopped when one player wins- he has all the cards (56)")
 {
     for (int i = 0; i < 100; i++)
     {
-        game.playAll();
+        game.playAll(); 
         Player winner = game.getWinner();
-        CHECK_EQ(game.getWinner().stacksize(), 0);
+        CHECK_EQ(game.getWinner().stacksize(), 56);
     }
 }
 
