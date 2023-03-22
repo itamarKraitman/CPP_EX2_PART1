@@ -1,5 +1,7 @@
 
-// #include "player.hpp"
+#pragma once 
+
+#include "player.hpp"
 #include <iostream>
 #include <string>
 
@@ -12,7 +14,7 @@ namespace ariel {
 
         public:
 
-        Game(Player player1, Player p2);
+        Game(Player player1, Player player2);
 
         void playTurn();
 
