@@ -21,7 +21,13 @@ namespace ariel{
 
         Player(string name); // constructor
 
-        Player::Player(const Player& player);
+        Player(const Player& player) noexcept; // copy constructor
+
+        Player& operator=(const Player& other); // copy assignment operator
+
+        Player(Player&& other) noexcept; // move constructor
+
+        Player& operator=(Player&& other) noexcept; // move assignment operator
 
         ~Player();
 

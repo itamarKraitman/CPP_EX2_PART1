@@ -6,9 +6,18 @@
 using namespace std;
 
 namespace ariel {
+
+    Game::Game() {}
+
     Game::Game(Player player1, Player player2) {}
 
-    Game::Game(const Game& game) {}
+    Game::Game(const Game& game) noexcept{}
+
+    Game& Game::operator=(const Game& other) {return *this;} // copy assignment operator
+
+    Game& Game::operator=(Game&& other) noexcept {return *this;} // move assignment operator
+
+    Game::Game(Game&& other) noexcept {} // move constructor
 
     Game::~Game() {}
 

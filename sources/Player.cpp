@@ -11,11 +11,17 @@ namespace ariel {
 
     Player::Player(string name) {}
 
-    Player::Player(const Player& player) {}
+    Player::Player(const Player& player) noexcept {}
+
+    Player& Player::operator=(const Player& other) {return *this;} // copy assignment operator
+
+    Player::Player(Player&& other) noexcept {} // move constructor
+
+    Player& Player::operator=(Player&& other) noexcept {return *this;} // move assignment operator
 
     Player::~Player() {}
 
-    string getName() {return "!";}
+    string Player::getName() {return "!";}
 
     int Player::stacksize() {return 1;}
 

@@ -16,9 +16,15 @@ namespace ariel {
 
         Card();
 
-        Card(const Card& card);
+        Card(const Card& card) noexcept; // copy constructor
 
-        Card(int number, int sign);
+        Card& operator=(const Card& other); // copy assignment operator
+
+        Card(int number, int sign); // constructor
+
+        Card(Card&& other) noexcept; // move constructor
+
+        Card& operator=(Card&& other) noexcept; // move assignment operator
 
         ~Card();
 

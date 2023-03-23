@@ -15,9 +15,17 @@ namespace ariel {
 
         public:
 
-        Game(Player player1, Player player2);
+        Game();
 
-        Game::Game(const Game& game);
+        Game(Player player1, Player player2); // constructor
+
+        Game(const Game& game) noexcept; // copy constructor
+
+        Game& operator=(const Game& other); // copy assignment operator
+
+        Game(Game&& other) noexcept; // move constructor
+
+        Game& operator=(Game&& other) noexcept; // move assignment operator
 
         ~Game();
 

@@ -6,10 +6,18 @@
 using namespace std;
 
 namespace ariel {
+
+    Card::Card() {}
     
     Card::Card(int number, int sign) {} // constructor
 
-    Card::Card(const Card& card) {}
+    Card::Card(const Card& card) noexcept {}
+
+    Card& Card::operator=(const Card& other) {return *this;}
+
+    Card& Card::operator=(Card&& other) noexcept {return *this;} // move assignment operator
+
+    Card::Card(Card&& other) noexcept{}
 
     Card::~Card() {} // distructor
     
