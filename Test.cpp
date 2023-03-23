@@ -108,6 +108,11 @@ TEST_CASE("All Game's methods do not throw errors")
     Player p2("Avi");
     CHECK_NOTHROW(Game(p1,p2));
     Game game(p1, p2);
+    SUBCASE("player can be registred onlly to one game")
+    {
+        Player p3("Amit");
+        CHECK_THROWS_MESSAGE(Game(p1,p3), "Player can be registred only to one game!");
+    }
     CHECK_NOTHROW(game.playTurn());
     CHECK_NOTHROW(game.printLastTurn());
     CHECK_NOTHROW(game.playAll());
@@ -140,11 +145,9 @@ TEST_CASE("After each turn the amount of cards is changed for both players")
     bool a2 = p2.cardesTaken() > 0;
     bool a = a1 || a2; 
     CHECK(a);
-    // CHECK(p1.cardesTaken() > 0 || p2.cardesTaken() > 0);
     bool b1 = p1.stacksize() < 26;
     bool b2 = p2.stacksize() < 26;
     bool b = b1 || b2;
-    // CHECK(p1.stacksize() < 26 || p2.stacksize() < 26);
     CHECK(b);
 }
 
