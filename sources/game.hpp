@@ -17,6 +17,10 @@ namespace ariel {
 
         Game(Player player1, Player player2);
 
+        Game::Game(const Game& game);
+
+        ~Game();
+
         void playTurn();
 
         void printLastTurn();

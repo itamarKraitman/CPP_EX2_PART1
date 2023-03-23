@@ -2,16 +2,25 @@
 #include <sstream>
 #include <string>
 #include <stdexcept>
+#include <random>
 #include "doctest.h"
 #include "sources/card.hpp"
 #include "sources/game.hpp"
 #include "sources/player.hpp"
-#include <random>
 
 using namespace ariel;
 using namespace std;
 
 // testing Card
+
+TEST_CASE("Card's methods do not throw errors")
+{
+    CHECK_NOTHROW(Card(1,1));
+    Card card(1,1);
+    CHECK_NOTHROW(card.getNumber());
+    CHECK_NOTHROW(card.getSign());
+    CHECK_NOTHROW(card.toString());
+}
 
 TEST_CASE("invalid number throws invalid argument exception")
 {
@@ -59,7 +68,7 @@ TEST_CASE("Card's getSign returns matching value")
     for (int i = 1; i <= 4; i++)
     {
         Card card(1, i);
-        CHECK_EQ(card.getSign(), i);
+        CHECK_EQ(card.getSign(), to_string(i));
     }
 }
 
@@ -71,8 +80,9 @@ TEST_CASE("Cards's to_String returns matchig string")
         for (int j = 1; j <= 4; j++)
         {
             Card card(i, j);
-            stringstream s;
-            CHECK_EQ(card.to_string(), s << "number: " << i << "sign: " << j);
+            stringstream s; 
+            s << "number: " << i << "sign: " << j;
+            CHECK_EQ(card.toString(), s.str());
         }
     }
 }
@@ -81,28 +91,62 @@ TEST_CASE("Cards's to_String returns matchig string")
 
 TEST_CASE("Player is constructed as expected")
 {
+    CHECK_NOTHROW(Player("Moshe"));
     Player player("Moshe");
+    CHECK_NOTHROW(player.cardesTaken());
     CHECK_EQ(player.cardesTaken(), 0); // in the beggining of the game each player has 28 cards and did'nt take any
+    CHECK_NOTHROW(player.stacksize());
     CHECK_EQ(player.stacksize(), 28);
 }
 
+
 // test Game
 
-Player p1("Moshe");
-Player p2("Avi");
-Game game(p1, p2);
+TEST_CASE("All Game's methods do not throw errors")
+{
+    Player p1("Moshe");
+    Player p2("Avi");
+    CHECK_NOTHROW(Game(p1,p2));
+    Game game(p1, p2);
+    CHECK_NOTHROW(game.playTurn());
+    CHECK_NOTHROW(game.printLastTurn());
+    CHECK_NOTHROW(game.playAll());
+    CHECK_NOTHROW(game.printWiner());
+    CHECK_NOTHROW(game.printLog());
+    CHECK_NOTHROW(game.printStats());
+}
 
 // test both playAll and getWinner
 TEST_CASE("Game stopped when one player wins- he has all the cards (56)")
 {
+    Player p1("Moshe");
+    Player p2("Avi");
+    Game game(p1, p2);
     for (int i = 0; i < 100; i++)
     {
         game.playAll(); 
         Player winner = game.getWinner();
-        CHECK_EQ(game.getWinner().stacksize(), 56);
+        CHECK_EQ(game.getWinner().stacksize(), 52);
     }
 }
 
+TEST_CASE("After each turn the amount of cards is changed for both players")
+{
+    Player p1("Moshe");
+    Player p2("Avi");
+    Game game(p1, p2);
+    game.playTurn();
+    bool a1 = p1.cardesTaken() > 0;
+    bool a2 = p2.cardesTaken() > 0;
+    bool a = a1 || a2; 
+    CHECK(a);
+    // CHECK(p1.cardesTaken() > 0 || p2.cardesTaken() > 0);
+    bool b1 = p1.stacksize() < 26;
+    bool b2 = p2.stacksize() < 26;
+    bool b = b1 || b2;
+    // CHECK(p1.stacksize() < 26 || p2.stacksize() < 26);
+    CHECK(b);
+}
 
 
 

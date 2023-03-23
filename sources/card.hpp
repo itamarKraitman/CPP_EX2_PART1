@@ -1,7 +1,7 @@
 
 #pragma once 
 
-#include <string.h>
+#include <string>
 #include <iostream>
 
 using namespace std;
@@ -14,12 +14,18 @@ namespace ariel {
 
         public:
 
+        Card();
+
+        Card(const Card& card);
+
         Card(int number, int sign);
+
+        ~Card();
 
         int getNumber();
 
         string getSign();
 
-        string to_string();
+        string toString();
     };
 }

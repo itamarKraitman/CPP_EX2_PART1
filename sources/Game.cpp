@@ -6,10 +6,11 @@
 using namespace std;
 
 namespace ariel {
-    Game::Game(Player player1, Player player2) {
-        this->p1 = player1;
-        this->p2 = player1;
-    }
+    Game::Game(Player player1, Player player2) {}
+
+    Game::Game(const Game& game) {}
+
+    Game::~Game() {}
 
     void Game::playTurn() {}
 
@@ -22,4 +23,7 @@ namespace ariel {
     void Game::printLog(){}
 
     void Game::printStats(){}
+    
+    Player Game::getWinner() {return Player("Moshe");}
+
 }

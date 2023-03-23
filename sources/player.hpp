@@ -21,6 +21,10 @@ namespace ariel{
 
         Player(string name); // constructor
 
+        Player::Player(const Player& player);
+
+        ~Player();
+
         string getName();
 
         int stacksize();

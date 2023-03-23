@@ -11,6 +11,10 @@ namespace ariel {
 
     Player::Player(string name) {}
 
+    Player::Player(const Player& player) {}
+
+    Player::~Player() {}
+
     string getName() {return "!";}
 
     int Player::stacksize() {return 1;}
