@@ -35,4 +35,8 @@ namespace ariel {
     
     Player Game::getWinner() {return Player("Moshe");}
 
+    int Game::getDeck() {return 1;}
+
+    void Game::setDeck(int newAmount) {}
+
 }

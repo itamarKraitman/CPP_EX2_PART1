@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include "card.hpp"
 
 using namespace std;
 
@@ -36,5 +37,14 @@ namespace ariel{
         int stacksize();
 
         int cardesTaken();
+
+        void putCard(); // puts the next card in player's deck
+
+        void addCardsToPlayerDeck();
+
+        void setStack();
+
+        void setStack(Card card);
+
     };
 }

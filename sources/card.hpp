@@ -10,7 +10,7 @@ namespace ariel {
     class Card
     {
         int number; // 1-13 (11=prince, 12=queen, 13=king)
-        string sign; // clubs (♣), diamonds (♦), hearts (♥), and spades (♠)
+        string sign; // clubs (♣) (0), diamonds (♦) (1), hearts (♥) (2), and spades (♠) (3)
 
         public:
 

@@ -26,5 +26,14 @@ namespace ariel {
     int Player::stacksize() {return 1;}
 
     int Player::cardesTaken() {return 1;}
+
+    void Player::putCard() {} // puts the next card in player's deck
+
+    void Player::addCardsToPlayerDeck() {}
+
+    void Player::setStack() {}
+
+    void Player::setStack(Card card) {}
+
 }
 

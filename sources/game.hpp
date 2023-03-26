@@ -12,6 +12,7 @@ namespace ariel {
         Player p1;
         Player p2;
         string winner;
+        int deck; // number of cards in deck
 
         public:
 
@@ -42,5 +43,9 @@ namespace ariel {
         void printStats();
 
         Player getWinner();
+
+        int getDeck();
+
+        void setDeck(int newAmount);
     };
 }
