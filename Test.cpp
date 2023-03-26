@@ -206,13 +206,20 @@ TEST_CASE("War scenario")
     Card c2(1, 2);
     Card c3(2, 1);
     Card c4(3, 2);
+    Card c5(2, 3);
+    Card c6(3, 4);
     Player p1("Moshe");
     Player p2("Ori");
     Game g1(p1, p2);
-    p1.setStack(c1);
-    p2.setStack(c2);
+    p1.setStack(c5);
+    p2.setStack(c6);
     p1.setStack(c3);
     p2.setStack(c4);
+    p1.setStack(c1);
+    p2.setStack(c2);
+    // stack look like this:
+    // p1: head = 1 (war!) -> 2 (upsidedwon) -> 2 (loos)
+    // p2: head = 1 (war!) -> 3 (upsidedwon) -> 3 (win)
     int p1Stack = p1.stacksize();
     int p2Stack = p2.stacksize();
     int p2Taken = p2.cardesTaken(); // should be increased by 6 after playing next turn
@@ -223,6 +230,4 @@ TEST_CASE("War scenario")
     bool p2StackChanged = p2.stacksize() == p2Stack - 3;
     bool bothTrue = p1StackChanged && p2StackChanged;
     CHECK(bothTrue);
-
-
 }
