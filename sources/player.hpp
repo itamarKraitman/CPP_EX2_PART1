@@ -8,12 +8,16 @@ using namespace std;
 
 namespace ariel{
     class Player {
+        private:
+
         string name;
         int stack;
         int taken;
+        bool isRegistred;
         double winRate;
         int cardsWon;
         double drawRate;
+        int drawsHappened;
         int amountOfDraws;
 
         public:
@@ -45,6 +49,19 @@ namespace ariel{
         void setStack();
 
         void setStack(Card card);
+
+        double getWinRate();
+
+        void setWinRate();
+
+        double getDrawRate();
+
+        void setDrawRate();
+
+        int getNumberOfDraws();
+
+        void setNumberOfDraws();
+
 
     };
 }

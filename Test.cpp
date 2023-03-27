@@ -110,6 +110,7 @@ TEST_CASE("All Game's methods do not throw errors")
     SUBCASE("player can be registred onlly to one game")
     {
         Player p3("Amit");
+        // should threw an error because p1 is already registred to a game (p1.isRegistred = true)
         CHECK_THROWS_MESSAGE(Game(p1, p3), "Player can be registred only to one game!");
     }
     CHECK_NOTHROW(game.playTurn());
@@ -230,4 +231,42 @@ TEST_CASE("War scenario")
     bool p2StackChanged = p2.stacksize() == p2Stack - 3;
     bool bothTrue = p1StackChanged && p2StackChanged;
     CHECK(bothTrue);
+}
+
+TEST_CASE("PrintLog works")
+{
+    Card c1(1, 0);
+    Card c2(1, 2);
+    Card c3(2, 1);
+    Card c4(3, 3);
+    Player p1("Moshe");
+    Player p2("Ori");
+    Game game(p1, p2);
+    p1.setStack(c4);
+    p2.setStack(c3);
+    p1.setStack(c2);
+    p2.setStack(c1);
+    string logMessage = "Moshe played Ace of Hearts, Ori played Ace of Clubs. Draw. Moshe played 3 of Spades, Ori played 2 of Diamonds. Modhe wins."; // should be printed
+    stringstream actuallPrinted;
+    streambuf *printed = cout.rdbuf();
+    cout.rdbuf(actuallPrinted.rdbuf());
+    game.printLastTurn();
+    cout.rdbuf(printed); // store the messgae printed from printStats
+    CHECK(actuallPrinted.str() != "");
+    CHECK(actuallPrinted.str() == logMessage);
+}
+
+TEST_CASE("printStats works")
+{
+    Player p1("Moshe");
+    Player p2("Ori");
+    Game game(p1, p2);
+    string statsMessage = "Moshe: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0\nOri: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0"; // should be printed
+    stringstream actuallPrinted;
+    streambuf *printed = cout.rdbuf();
+    cout.rdbuf(actuallPrinted.rdbuf());
+    game.printLastTurn();
+    cout.rdbuf(printed); // store the messgae printed from printStats
+    CHECK(actuallPrinted.str() != "");
+    CHECK(actuallPrinted.str() == statsMessage);
 }

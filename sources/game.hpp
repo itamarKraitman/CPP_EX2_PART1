@@ -9,16 +9,14 @@ using namespace std;
 
 namespace ariel {
     class Game {
-        Player p1;
-        Player p2;
+        Player& p1;
+        Player& p2;
         string winner;
         int deck; // number of cards in deck
 
         public:
 
-        Game();
-
-        Game(Player player1, Player player2); // constructor
+        Game(Player& player1, Player& player2);// constructor
 
         Game(const Game& game) noexcept; // copy constructor
 

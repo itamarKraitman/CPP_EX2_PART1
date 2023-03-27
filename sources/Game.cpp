@@ -7,17 +7,15 @@ using namespace std;
 
 namespace ariel {
 
-    Game::Game() {}
+    Game::Game(Player& player1, Player& player2) : p1(player1), p2(player2) {}
 
-    Game::Game(Player player1, Player player2) {}
-
-    Game::Game(const Game& game) noexcept{}
+    Game::Game(const Game& game) noexcept : p1(game.p1), p2(game.p2) {}
 
     Game& Game::operator=(const Game& other) {return *this;} // copy assignment operator
 
     Game& Game::operator=(Game&& other) noexcept {return *this;} // move assignment operator
 
-    Game::Game(Game&& other) noexcept {} // move constructor
+    Game::Game(Game&& other) noexcept : p1(other.p1), p2(other.p2) {} // move constructor
 
     Game::~Game() {}
 

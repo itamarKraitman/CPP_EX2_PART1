@@ -35,5 +35,16 @@ namespace ariel {
 
     void Player::setStack(Card card) {}
 
+    double Player::getWinRate() {return this->winRate;}
+
+    void Player::setWinRate() {}
+
+    double Player::getDrawRate() {return this->drawRate;}
+
+    void Player::setDrawRate() {}
+
+    int Player::getNumberOfDraws() {return this->drawsHappened;}
+
+    void Player::setNumberOfDraws() {}
 }
 
