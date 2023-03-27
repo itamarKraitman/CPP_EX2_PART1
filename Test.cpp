@@ -245,6 +245,17 @@ TEST_CASE("War scenario")
         p2.setStack(c1);
         // now both players have 2 cads, when war occures, they both run out during the war
         CHECK_THROWS_MESSAGE(g1.playTurn(), "players run out of cards");
+        if (p1.cardesTaken() < p2.cardesTaken()) // p2 wins
+        {
+            string winnerName = p2.getName();
+            string actuallWinner = g1.getWinner().getName();
+            CHECK(winnerName == actuallWinner);
+        }
+        else { // p1 wins
+            string winnerName = p1.getName();
+            string actuallWinner = g1.getWinner().getName();
+            CHECK(winnerName == actuallWinner);
+        }
     }
     // stack look like this:
     // p1: head = 1 (war!) -> 2 (upsidedwon) -> 2 (loos)
