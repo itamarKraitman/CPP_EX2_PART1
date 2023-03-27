@@ -46,7 +46,7 @@ namespace ariel{
 
         void addCardsToPlayerDeck();
 
-        void setStack();
+        void setStack(int numOfCardsToReduce);
 
         void setStack(Card card);
 

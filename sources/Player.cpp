@@ -31,7 +31,7 @@ namespace ariel {
 
     void Player::addCardsToPlayerDeck() {}
 
-    void Player::setStack() {}
+    void Player::setStack(int numOfCardsToReduce) {}
 
     void Player::setStack(Card card) {}
 

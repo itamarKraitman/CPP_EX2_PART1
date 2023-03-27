@@ -261,6 +261,20 @@ TEST_CASE("printStats works")
     Player p1("Moshe");
     Player p2("Ori");
     Game game(p1, p2);
+    SUBCASE("player runs out of cards during a war") {
+        p1.setStack(0); // p1 has no cards
+        Card c1(1, 0);
+        Card c2(1, 2);
+        Card c3(2, 1);
+        Card c4(3, 3);
+        p1.setStack(c4);
+        p2.setStack(c3);
+        p1.setStack(c2); // now p1 has two cards
+        p2.setStack(c1); 
+        // should by a draw, and then p1 run out of cards after the upsidedown card
+        CHECK_THROWS_MESSAGE(game.playTurn(),"p1 is running out of cards");
+        CHECK(game.getWinner().getName() == "Ori"); // p1 (Moshe) run out of cards so p2 (Ori) wins
+    }
     string statsMessage = "Moshe: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0\nOri: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0"; // should be printed
     stringstream actuallPrinted;
     streambuf *printed = cout.rdbuf();
@@ -270,3 +284,5 @@ TEST_CASE("printStats works")
     CHECK(actuallPrinted.str() != "");
     CHECK(actuallPrinted.str() == statsMessage);
 }
+
+
