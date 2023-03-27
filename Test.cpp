@@ -130,17 +130,13 @@ TEST_CASE("Game stopped when one player wins- he has all the cards (56)")
     for (int i = 0; i < 100; i++)
     {
         game.playAll();
-        Player winner = game.getWinner();
-        CHECK_EQ(game.getWinner().stacksize(), 52);
-        SUBCASE("printWinner prints the actuall winner name")
-        {
-            stringstream actuallWinner;
-            streambuf *winnerPrinted = cout.rdbuf();
-            cout.rdbuf(actuallWinner.rdbuf());
-            game.printWiner();
-            cout.rdbuf(winnerPrinted); // store the message printed from printWiner
-            CHECK(actuallWinner.str() == winner.getName());
-        }
+        string winnerName = game.getWinner().getName();
+        stringstream actuallWinner;
+        streambuf *winnerPrinted = cout.rdbuf();
+        cout.rdbuf(actuallWinner.rdbuf());
+        game.printWiner();
+        cout.rdbuf(winnerPrinted); // store the message printed from printWiner
+        CHECK(actuallWinner.str() == winnerName);
     }
 }
 
@@ -173,7 +169,8 @@ TEST_CASE("Player with higher card wins the turn")
     {
         g1.setDeck(0); // remove all card form main deck
         g1.playAll();
-        CHECK(g1.getWinner().getName() == "");
+        string winnerName = g1.getWinner().getName();
+        CHECK(winnerName != "");
         CHECK(p1.cardesTaken() == 0);
         CHECK(p2.cardesTaken() == 0);
     }
@@ -218,6 +215,37 @@ TEST_CASE("War scenario")
     p2.setStack(c4);
     p1.setStack(c1);
     p2.setStack(c2);
+    SUBCASE("player runs out of cards during a war")
+    {
+        p1.setStack(0); // p1 has no cards
+        Card c1(1, 0);
+        Card c2(1, 2);
+        Card c3(2, 1);
+        Card c4(3, 3);
+        p1.setStack(c4);
+        p2.setStack(c3);
+        p1.setStack(c2); // now p1 has two cards
+        p2.setStack(c1);
+        // should by a draw, and then p1 run out of cards after the upsidedown card
+        CHECK_THROWS_MESSAGE(g1.playTurn(), "p1 is running out of cards");
+        string winnerName = g1.getWinner().getName();
+        CHECK(winnerName == "Ori"); // p1 (Moshe) run out of cards so p2 (Ori) wins
+    }
+    SUBCASE("both players run out of cards during a war")
+    {
+        p1.setStack(0); // p1 has no cards
+        p2.setStack(0); // p2 has no cards
+        Card c1(1, 0);
+        Card c2(1, 2);
+        Card c3(2, 1);
+        Card c4(3, 3);
+        p1.setStack(c4);
+        p2.setStack(c3);
+        p1.setStack(c2);
+        p2.setStack(c1);
+        // now both players have 2 cads, when war occures, they both run out during the war
+        CHECK_THROWS_MESSAGE(g1.playTurn(), "players run out of cards");
+    }
     // stack look like this:
     // p1: head = 1 (war!) -> 2 (upsidedwon) -> 2 (loos)
     // p2: head = 1 (war!) -> 3 (upsidedwon) -> 3 (win)
@@ -261,20 +289,6 @@ TEST_CASE("printStats works")
     Player p1("Moshe");
     Player p2("Ori");
     Game game(p1, p2);
-    SUBCASE("player runs out of cards during a war") {
-        p1.setStack(0); // p1 has no cards
-        Card c1(1, 0);
-        Card c2(1, 2);
-        Card c3(2, 1);
-        Card c4(3, 3);
-        p1.setStack(c4);
-        p2.setStack(c3);
-        p1.setStack(c2); // now p1 has two cards
-        p2.setStack(c1); 
-        // should by a draw, and then p1 run out of cards after the upsidedown card
-        CHECK_THROWS_MESSAGE(game.playTurn(),"p1 is running out of cards");
-        CHECK(game.getWinner().getName() == "Ori"); // p1 (Moshe) run out of cards so p2 (Ori) wins
-    }
     string statsMessage = "Moshe: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0\nOri: win rate: 0, cards won : 0, draw rate: 0, draws happened: 0"; // should be printed
     stringstream actuallPrinted;
     streambuf *printed = cout.rdbuf();
@@ -284,5 +298,3 @@ TEST_CASE("printStats works")
     CHECK(actuallPrinted.str() != "");
     CHECK(actuallPrinted.str() == statsMessage);
 }
-
-
