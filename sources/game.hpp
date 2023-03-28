@@ -12,8 +12,7 @@ namespace ariel {
         Player& p1;
         Player& p2;
         string winner;
-        int deck; // number of cards in deck
-
+    
         public:
 
         Game(Player& player1, Player& player2);// constructor

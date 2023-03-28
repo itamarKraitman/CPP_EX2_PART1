@@ -38,6 +38,8 @@ namespace ariel{
 
         string getName();
 
+        bool registred();
+
         int stacksize();
 
         int cardesTaken();
