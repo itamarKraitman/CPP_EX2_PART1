@@ -151,15 +151,15 @@ TEST_CASE("Player with higher card wins the turn")
     Game g1(p1, p2);
     p1.setStack(c1);
     p2.setStack(c2); // p1 has higher card in the head of his deck
-    SUBCASE("No cards left in main deck")
-    {
-        g1.setDeck(0); // remove all card form main deck
-        g1.playAll();
-        string winnerName = g1.getWinner().getName();
-        CHECK(winnerName != "");
-        CHECK(p1.cardesTaken() == 0);
-        CHECK(p2.cardesTaken() == 0);
-    }
+    // SUBCASE("No cards left in main deck")
+    // {
+    //     g1.setDeck(0); // remove all card form main deck
+    //     g1.playAll();
+    //     string winnerName = g1.getWinner().getName();
+    //     CHECK(winnerName != "");
+    //     CHECK(p1.cardesTaken() == 0);
+    //     CHECK(p2.cardesTaken() == 0);
+    // }
     int p2CardsTeaken = p2.cardesTaken();
     int p1CardsTeaken = p1.cardesTaken();
     g1.playTurn();

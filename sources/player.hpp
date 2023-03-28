@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "card.hpp"
 
 using namespace std;
@@ -11,18 +12,17 @@ namespace ariel{
         private:
 
         string name;
-        int stack;
+        vector<Card> stack;
+        int stackSize;
         int taken;
         bool isRegistred;
         double winRate;
+        int wins;
         int cardsWon;
         double drawRate;
         int drawsHappened;
-        int amountOfDraws;
 
         public:
-        
-        Player();
 
         Player(string name); // constructor
 
@@ -42,13 +42,13 @@ namespace ariel{
 
         int cardesTaken();
 
-        void putCard(); // puts the next card in player's deck
+        Card putCard(); // puts the next card in player's deck
 
-        void addCardsToPlayerDeck();
+        void addCardsToPlayerTaken(int amountToAdd);
 
-        void setStack(int numOfCardsToReduce);
+        void setStack(int numOfCardsToReduce); // number of cards
 
-        void setStack(Card card);
+        void setStack(Card card); // add card to stack
 
         double getWinRate();
 
@@ -62,6 +62,8 @@ namespace ariel{
 
         void setNumberOfDraws();
 
+        int getWins();
 
+        void setWins();
     };
 }

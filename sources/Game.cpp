@@ -7,7 +7,13 @@ using namespace std;
 
 namespace ariel {
 
-    Game::Game(Player& player1, Player& player2) : p1(player1), p2(player2) {}
+    Game::Game(Player& player1, Player& player2) : p1(player1), p2(player2)
+    {
+        this->p1 = player1;
+        this->p2 = player2;
+        this->winner = "";
+
+    }
 
     Game::Game(const Game& game) noexcept : p1(game.p1), p2(game.p2) {}
 
@@ -17,7 +23,11 @@ namespace ariel {
 
     Game::Game(Game&& other) noexcept : p1(other.p1), p2(other.p2) {} // move constructor
 
-    Game::~Game() {}
+    Game::~Game() 
+    {
+        delete &p1;
+        delete &p2;
+    }
 
     void Game::playTurn() {}
 
