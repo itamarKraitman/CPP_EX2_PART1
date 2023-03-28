@@ -53,7 +53,7 @@ TEST_CASE("Card's getSign returns matching value")
     {
         signs s = (signs) i;
         Card card(1, s);
-        CHECK_EQ(card.getSign(), to_string(i));
+        CHECK_EQ(card.getSign(), s);
     }
 }
 
