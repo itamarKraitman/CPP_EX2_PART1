@@ -6,11 +6,21 @@
 
 using namespace std;
 
+
+
 namespace ariel {
+
+    enum signs {
+        Clubs = 0,
+        Diamonds = 1,
+        Hearts = 2,
+        Spades = 3
+    };
+
     class Card
     {
-        int number; // 1-13 (11=prince, 12=queen, 13=king)
-        string sign; // clubs (♣) (0), diamonds (♦) (1), hearts (♥) (2), and spades (♠) (3)
+        string number; // 1-13 (11=prince, 12=queen, 13=king)
+        signs sign; // clubs (♣) (0), diamonds (♦) (1), hearts (♥) (2), and spades (♠) (3)
 
         public:
 
@@ -20,7 +30,7 @@ namespace ariel {
 
         Card& operator=(const Card& other); // copy assignment operator
 
-        Card(int number, int sign); // constructor
+        Card(int number, signs sign); // constructor
 
         Card(Card&& other) noexcept; // move constructor
 
@@ -30,7 +40,7 @@ namespace ariel {
 
         int getNumber();
 
-        string getSign();
+        signs getSign();
 
         string toString();
     };

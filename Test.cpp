@@ -15,8 +15,8 @@ using namespace std;
 
 TEST_CASE("Card's methods do not throw errors")
 {
-    CHECK_NOTHROW(Card(1, 1));
-    Card card(1, 1);
+    CHECK_NOTHROW(Card(1, Diamonds));
+    Card card(1, Diamonds);
     CHECK_NOTHROW(card.getNumber());
     CHECK_NOTHROW(card.getSign());
     CHECK_NOTHROW(card.toString());
@@ -33,23 +33,7 @@ TEST_CASE("invalid number throws invalid argument exception")
         }
         if (number < 1 || number > 13)
         {
-            CHECK_THROWS(Card(number, 1));
-        }
-    }
-}
-
-TEST_CASE("invalid sign throws invalid argument exception")
-{
-    for (int i = 0; i < 100; i++)
-    {
-        int sign = rand() % 100;
-        if (i % 5 == 0) // check negative inputs every 5'th enrty
-        {
-            sign *= -1;
-        }
-        if (sign < 1 || sign > 4)
-        {
-            CHECK_THROWS(Card(1, sign));
+            CHECK_THROWS(Card(number, Diamonds));
         }
     }
 }
@@ -58,7 +42,7 @@ TEST_CASE("Card's getNumber returns matching value")
 {
     for (int i = 1; i <= 13; i++)
     {
-        Card card(i, 1);
+        Card card(i, Diamonds);
         CHECK_EQ(card.getNumber(), i);
     }
 }
@@ -67,7 +51,8 @@ TEST_CASE("Card's getSign returns matching value")
 {
     for (int i = 1; i <= 4; i++)
     {
-        Card card(1, i);
+        signs s = (signs) i;
+        Card card(1, s);
         CHECK_EQ(card.getSign(), to_string(i));
     }
 }
@@ -79,9 +64,10 @@ TEST_CASE("Cards's to_String returns matchig string")
     {
         for (int j = 1; j <= 4; j++)
         {
-            Card card(i, j);
+            signs sign = (signs) j;
+            Card card(i, sign);
             stringstream s;
-            s << "number: " << i << "sign: " << j;
+            s << "number: " << i << "sign: " << sign;
             CHECK_EQ(card.toString(), s.str());
         }
     }
@@ -122,7 +108,7 @@ TEST_CASE("All Game's methods do not throw errors")
 }
 
 // test both playAll and getWinner
-TEST_CASE("Game stopped when one player wins- he has all the cards (56)")
+TEST_CASE("Game stopped when one player wins")
 {
     Player p1("Moshe");
     Player p2("Avi");
@@ -158,8 +144,8 @@ TEST_CASE("After each turn the amount of cards is changed for both players")
 
 TEST_CASE("Player with higher card wins the turn")
 {
-    Card c1(1, 1);
-    Card c2(4, 1); // should win
+    Card c1(1, Diamonds);
+    Card c2(4, Diamonds); // should win
     Player p1("Moshe");
     Player p2("Ori");
     Game g1(p1, p2);
@@ -183,8 +169,8 @@ TEST_CASE("Player with higher card wins the turn")
 
 TEST_CASE("PrintLastTurn prints the correct turn log")
 {
-    Card c1(1, 1);
-    Card c2(4, 1); // should win
+    Card c1(1, Diamonds);
+    Card c2(4, Diamonds); // should win
     Player p1("Moshe");
     Player p2("Ori");
     Game g1(p1, p2);
@@ -200,12 +186,12 @@ TEST_CASE("PrintLastTurn prints the correct turn log")
 
 TEST_CASE("War scenario")
 {
-    Card c1(1, 1);
-    Card c2(1, 2);
-    Card c3(2, 1);
-    Card c4(3, 2);
-    Card c5(2, 3);
-    Card c6(3, 4);
+    Card c1(1, Diamonds);
+    Card c2(1, Hearts);
+    Card c3(2, Diamonds);
+    Card c4(3, Hearts);
+    Card c5(2, Spades);
+    Card c6(3, Spades);
     Player p1("Moshe");
     Player p2("Ori");
     Game g1(p1, p2);
@@ -218,10 +204,10 @@ TEST_CASE("War scenario")
     SUBCASE("player runs out of cards during a war")
     {
         p1.setStack(0); // p1 has no cards
-        Card c1(1, 0);
-        Card c2(1, 2);
-        Card c3(2, 1);
-        Card c4(3, 3);
+        Card c1(1, Diamonds);
+        Card c2(1, Hearts);
+        Card c3(2, Hearts);
+        Card c4(3, Spades);
         p1.setStack(c4);
         p2.setStack(c3);
         p1.setStack(c2); // now p1 has two cards
@@ -235,10 +221,10 @@ TEST_CASE("War scenario")
     {
         p1.setStack(0); // p1 has no cards
         p2.setStack(0); // p2 has no cards
-        Card c1(1, 0);
-        Card c2(1, 2);
-        Card c3(2, 1);
-        Card c4(3, 3);
+        Card c1(1, Clubs);
+        Card c2(1, Hearts);
+        Card c3(2, Diamonds);
+        Card c4(3, Spades);
         p1.setStack(c4);
         p2.setStack(c3);
         p1.setStack(c2);
@@ -274,10 +260,10 @@ TEST_CASE("War scenario")
 
 TEST_CASE("PrintLog works")
 {
-    Card c1(1, 0);
-    Card c2(1, 2);
-    Card c3(2, 1);
-    Card c4(3, 3);
+    Card c1(1, Clubs);
+    Card c2(1, Hearts);
+    Card c3(2, Diamonds);
+    Card c4(3, Spades);
     Player p1("Moshe");
     Player p2("Ori");
     Game game(p1, p2);
