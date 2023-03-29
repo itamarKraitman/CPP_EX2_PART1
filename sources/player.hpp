@@ -11,7 +11,7 @@ namespace ariel{
     class Player {
         private:
 
-        string name;
+        const string name;
         vector<Card> stack;
         int stackSize;
         int taken;
@@ -24,7 +24,7 @@ namespace ariel{
 
         public:
 
-        Player(string name); // constructor
+        Player(const string name); // constructor
 
         Player(const Player& player) noexcept; // copy constructor
 
@@ -36,13 +36,13 @@ namespace ariel{
 
         ~Player();
 
-        string getName();
+        string getName() const;
 
-        bool registred();
+        bool registred() const;
 
-        int stacksize();
+        int stacksize() const;
 
-        int cardesTaken();
+        int cardesTaken() const;
 
         Card putCard(); // puts the next card in player's deck
 
@@ -52,19 +52,19 @@ namespace ariel{
 
         void setStack(Card card); // add card to stack
 
-        double getWinRate();
+        double getWinRate() const;
 
         void setWinRate();
 
-        double getDrawRate();
+        double getDrawRate() const;
 
         void setDrawRate();
 
-        int getNumberOfDraws();
+        int getNumberOfDraws() const;
 
         void setNumberOfDraws();
 
-        int getWins();
+        int getWins() const;
 
         void setWins();
     };

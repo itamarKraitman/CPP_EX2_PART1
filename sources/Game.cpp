@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <sstream>
 #include "game.hpp"
 #include "player.hpp"
 
@@ -7,16 +8,15 @@ using namespace std;
 
 namespace ariel
 {
-
     Game::Game(Player &player1, Player &player2) : p1(player1), p2(player2)
     {
-        // if (player1.registred() || player2.registred())
-        // {
-        //     throw invalid_argument("Player can be registred only to one game!");
-        // }
-        // this->p1 = player1;
-        // this->p2 = player2;
-        // this->winner = "";
+        if (player1.registred() || player2.registred())
+        {
+            throw invalid_argument("Player can be registred only to one game!");
+        }
+        this->p1 = player1;
+        this->p2 = player2;
+        this->winner = "";
     }
 
     Game::Game(const Game &game) noexcept : p1(game.p1), p2(game.p2) {}
@@ -27,28 +27,76 @@ namespace ariel
 
     Game::Game(Game &&other) noexcept : p1(other.p1), p2(other.p2) {} // move constructor
 
-    Game::~Game()
+    Game::~Game() {}
+
+    void Game::playTurn() 
     {
-        // delete &p1;
-        // delete &p2;
+        int numberOfCardsThrewInTurn = 2; // in each turn at least 2 cards are thrown
+        // both players throw cards
+        Card p1Card = p1.putCard();
+        Card p2Card = p2.putCard();
+        this->lastTurnLog << "p1 plays " << p1Card.getNumber() << " of " << p1Card.getSign() << " p2 plays " << p2Card.getNumber() << " of " << p2Card.getSign();
+        while (p1Card.getNumber() == p2Card.getNumber()) // war scenario, until there is no draw so no war
+        {
+            this->lastTurnLog << " draw.";
+            p1.setNumberOfDraws();
+            p2.setNumberOfDraws();
+            p1.setDrawRate();
+            p2.setDrawRate();
+            // both put card down- need to check if not causing data leak
+            p1.putCard();
+            p2.putCard();
+            // both put card up
+            p1Card = p1.putCard();
+            p2Card = p2.putCard();
+            // add playes to lastTurnLog
+            this->lastTurnLog << "p1 plays " << p1Card.getNumber() << " of " << p1Card.getSign() << " p2 plays " << p2Card.getNumber() << " of " << p2Card.getSign();
+            numberOfCardsThrewInTurn += 4; 
+        }
+        // both stack-- if can, if player runs out of cards he looses- in putCard()
+        // if p1 wins: add cards to taken, win rate++, update win rate
+        if (p1Card.getNumber() > p2Card.getNumber())
+        {
+            p1.setWins();
+            p1.setWinRate();
+            p1.addCardsToPlayerTaken(numberOfCardsThrewInTurn);
+            this->lastTurnLog << "p1 wins.\n";
+        }
+        else if (p2Card.getNumber() > p1Card.getNumber())
+        {
+            p2.setWins();
+            p2.setWinRate();
+            p2.addCardsToPlayerTaken(numberOfCardsThrewInTurn);
+            this->lastTurnLog << "p2 wins.\n";
+        }
+        this->gameLog += lastTurnLog.str(); // add turn log to gameLog
+        this->lastTurnLog << "";
     }
 
-    void Game::playTurn() {}
+    void Game::printLastTurn() 
+    {
+        cout << this->lastTurnLog.str() << endl;
+    }
 
-    void Game::printLastTurn() {}
+    void Game::playAll() 
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            playTurn();
+        }
+    }
 
-    void Game::playAll() {}
+    void Game::printWiner() 
+    {
+        cout << this->winner;
+    }
 
-    void Game::printWiner() {}
+    void Game::printLog() 
+    {
+        cout << this->gameLog << endl;
+    }
 
-    void Game::printLog() {}
+    void Game::printStats() {} //TODO when tests come
 
-    void Game::printStats() {}
-
-    Player Game::getWinner() { return Player("Moshe"); }
-
-    int Game::getDeck() { return 1; }
-
-    void Game::setDeck(int newAmount) {}
-
+    Player Game::getWinner() { return this->winner; }
 }

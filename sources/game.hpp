@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ namespace ariel {
         Player& p1;
         Player& p2;
         string winner;
+        string gameLog;
+        stringstream lastTurnLog;
     
         public:
 

@@ -9,16 +9,16 @@ using namespace std;
 namespace ariel
 {
 
-    Player::Player(string name)
+    Player::Player(const string name) : name(name)
     {
-        // this->name = name;
-        // this->stackSize = 26;
-        // // this->taken = 0;
-        // this->isRegistred = false;
-        // this->winRate = 0;
-        // this->cardsWon = 0;
-        // this->drawRate = 0;
-        // this->drawsHappened = 0;
+        this->stackSize = 26;
+        this->stack;
+        this->taken = 0;
+        this->isRegistred = false;
+        this->winRate = 0;
+        this->cardsWon = 0;
+        this->drawRate = 0;
+        this->drawsHappened = 0;
     }
 
     Player::Player(const Player &player) noexcept {}
@@ -29,82 +29,101 @@ namespace ariel
 
     Player &Player::operator=(Player &&other) noexcept { return *this; } // move assignment operator
 
-    Player::~Player() {}
+    Player::~Player() 
+    {
+        // delete and free memory of all Cards in stack
+        stack.clear(); 
+        stack.shrink_to_fit();
+    }
 
-    string Player::getName() { return this->name; }
+    string Player::getName() const
+    {
+         return this->name; 
+    }
 
-    bool Player::registred() 
+    bool Player::registred() const
     {
         return this->isRegistred;
     }
 
-    int Player::stacksize() { return this->stackSize; }
+    int Player::stacksize() const
+    { 
+        return this->stackSize; 
+    }
 
-    int Player::cardesTaken() { return this->taken; }
+    int Player::cardesTaken() const
+    { 
+        return this->taken; 
+    }
 
     Card Player::putCard()
     { // puts the next card from player's deck
-        // Card topCard;
-        // if (stackSize > 0)
-        // {
-        //     stackSize--;
-        //     topCard = stack[0];
-        //     stack.erase(stack.begin()); // remove first element
-        // }
-        // else
-        // {
-        //     cout << "No cards left in stack!";
-        // }
-        // return topCard;
-        return Card(1, Diamonds);
+        Card topCard;
+        if (stackSize > 0)
+        {
+            stackSize--;
+            topCard = stack[0];
+            stack.erase(stack.begin()); // remove first element
+        }
+        else
+        {
+            cout << this->name << " is running out of cards";
+        }
+        return topCard;
     }
 
     void Player::addCardsToPlayerTaken(int amountToAdd) 
     {
-        // this->taken += amountToAdd;
+        this->taken += amountToAdd;
     }
 
     void Player::setStack(int numOfCardsToReduce) 
     {
-        // this->stackSize -= numOfCardsToReduce;
+        this->stackSize -= numOfCardsToReduce;
     }
 
     void Player::setStack(Card card) 
     { 
-        // this->stack.insert(stack.begin(), card);
+        this->stack.insert(stack.begin(), card);
     }
 
-    double Player::getWinRate() { return this->winRate; }
+    double Player::getWinRate() const
+    { 
+        return this->winRate; 
+    }
 
     void Player::setWinRate() 
     {
-        // this->winRate = this->wins / (this->wins + this->drawsHappened);
+        this->winRate = this->wins / (this->wins + this->drawsHappened);
     }
 
-    double Player::getDrawRate() { return this->drawRate; }
+    double Player::getDrawRate() const
+    { 
+        return this->drawRate; 
+    }
 
     void Player::setDrawRate() 
     {
-        // this->drawRate = this->drawsHappened / (this->wins + this->drawsHappened);
+        this->drawRate = this->drawsHappened / (this->wins + this->drawsHappened);
     }
 
-    int Player::getNumberOfDraws() 
+    int Player::getNumberOfDraws() const
     { 
         return this->drawsHappened; 
     }
 
     void Player::setNumberOfDraws() 
     {
-        // this->drawsHappened++;
+        this->drawsHappened++;
     }
 
-    int Player::getWins() 
+    int Player::getWins() const
     {
         return this->wins;
     }
 
     void Player::setWins()
     {
-        // this->wins++;
+        this->wins++;
     }
 }

@@ -26,11 +26,11 @@ namespace ariel {
 
         Card();
 
+        Card(int number, signs sign); // constructor
+
         Card(const Card& card) noexcept; // copy constructor
 
         Card& operator=(const Card& other); // copy assignment operator
-
-        Card(int number, signs sign); // constructor
 
         Card(Card&& other) noexcept; // move constructor
 
@@ -38,9 +38,9 @@ namespace ariel {
 
         ~Card();
 
-        int getNumber();
+        int getNumber() const;
 
-        signs getSign();
+        signs getSign() const;
 
         string toString();
     };
