@@ -12,7 +12,7 @@ namespace ariel
     Player::Player(const string name) : name(name)
     {
         this->stackSize = 26;
-        this->stack;
+        // this->stack;
         this->taken = 0;
         this->isRegistred = false;
         this->winRate = 0;
@@ -85,6 +85,11 @@ namespace ariel
     void Player::setStack(Card card) 
     { 
         this->stack.insert(stack.begin(), card);
+    }
+
+    vector<Card> Player::getStack()
+    {
+        return this->stack;
     }
 
     double Player::getWinRate() const

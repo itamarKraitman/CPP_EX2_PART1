@@ -21,7 +21,24 @@ namespace ariel
             }
             else
             {
-                this->number = number;
+                switch (number)
+                {
+                case 1:
+                    this->number = "Ace";
+                    break;
+                case 11:
+                    this->number = "Prince";
+                    break;
+                case 12:
+                    this->number = "Queen";
+                    break;
+                case 13:
+                    this->number = "King";
+                    break;
+                default:
+                    this->number = to_string(number);
+                    break;
+                }
                 this->sign = sign;
             }
         }
@@ -52,9 +69,9 @@ namespace ariel
 
     Card::~Card() {} // distructor
 
-    int Card::getNumber() const
+    string Card::getNumber() const
     {
-        return stoi(this->number);
+        return this->number;
     }
 
     signs Card::getSign() const
@@ -64,8 +81,26 @@ namespace ariel
 
     string Card::toString()
     {
-        ostringstream s;
-        s << this->number << " of " << this->sign;
+        stringstream s;
+        string signString = signsString(this->sign);
+        s << (this->number + " of " + signString);
         return s.str();
+    }
+
+    string Card::signsString(signs sign)
+    {
+        switch (sign)
+        {
+        case Clubs:
+            return "Clubs";
+        case Diamonds:
+            return "Diamonds";
+        case Hearts:
+            return "Hearts";
+        case Spades:
+            return "Spades";
+        default:
+            return "";
+        }
     }
 }

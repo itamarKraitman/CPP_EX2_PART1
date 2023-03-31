@@ -17,6 +17,9 @@ namespace ariel
         this->p1 = player1;
         this->p2 = player2;
         this->winner = "";
+        this->p1.getStack().clear();
+        this->p2.getStack().clear();
+        generateDeckAndDeal();
     }
 
     Game::Game(const Game &game) noexcept : p1(game.p1), p2(game.p2) {}
@@ -28,6 +31,39 @@ namespace ariel
     Game::Game(Game &&other) noexcept : p1(other.p1), p2(other.p2) {} // move constructor
 
     Game::~Game() {}
+
+    void Game::generateDeckAndDeal() // generates regular deck, shuffle it, and deal to players
+    {
+        vector<Card> deck;
+        // generate cards and push into the deck
+        for (int i = 1; i < 14; i++) 
+        {
+            for (signs j = Clubs; j <= Spades; j = signs(j + 1))
+            {
+                Card newCard(Card(i, j));
+                deck.push_back(newCard);
+                // cout << newCard.toString() << endl; // prints correctly
+                // cout << deck.back().toString() << endl;// prints the same string all the time
+            }
+        }
+        // shuffle the deck
+        auto e = std::default_random_engine{};
+        shuffle(deck.begin(), deck.end(), e);
+        // // deal the deck
+        for (size_t i = 0; i < deck.size(); i++)
+        {
+            if (i % 2 == 0)
+            {
+                p1.getStack().push_back(deck[i]);
+                cout << deck[i].toString() << endl;
+            }
+            else 
+            {
+                p2.getStack().push_back(deck[i]);
+                // cout << p2.getStack().back().toString() << endl;
+            }
+        }
+    }
 
     void Game::playTurn() 
     {

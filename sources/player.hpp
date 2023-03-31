@@ -52,6 +52,8 @@ namespace ariel{
 
         void setStack(Card card); // add card to stack
 
+        vector<Card> getStack();
+
         double getWinRate() const;
 
         void setWinRate();

@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -22,6 +24,8 @@ namespace ariel {
         string number; // 1-13 (11=prince, 12=queen, 13=king)
         signs sign; // clubs (♣) (0), diamonds (♦) (1), hearts (♥) (2), and spades (♠) (3)
 
+        string signsString(signs sign);
+        
         public:
 
         Card();
@@ -38,10 +42,11 @@ namespace ariel {
 
         ~Card();
 
-        int getNumber() const;
+        string getNumber() const;
 
         signs getSign() const;
 
         string toString();
+
     };
 }

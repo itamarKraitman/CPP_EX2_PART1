@@ -5,6 +5,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -30,6 +34,8 @@ namespace ariel {
 
         ~Game();
 
+        void generateDeckAndDeal();
+
         void playTurn();
 
         void printLastTurn();
@@ -43,9 +49,5 @@ namespace ariel {
         void printStats();
 
         Player getWinner();
-
-        int getDeck();
-
-        void setDeck(int newAmount);
     };
 }
