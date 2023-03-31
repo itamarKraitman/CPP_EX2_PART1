@@ -46,7 +46,7 @@ namespace ariel {
 
         signs getSign() const;
 
-        string toString();
+        string toString() const;
 
     };
 }

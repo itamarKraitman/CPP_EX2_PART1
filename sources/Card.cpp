@@ -37,7 +37,6 @@ namespace ariel
                     break;
                 default:
                     this->number = to_string(number);
-                    break;
                 }
                 this->sign = sign;
             }
@@ -79,28 +78,46 @@ namespace ariel
         return this->sign;
     }
 
-    string Card::toString()
+    string Card::toString() const
     {
-        stringstream s;
-        string signString = signsString(this->sign);
-        s << (this->number + " of " + signString);
-        return s.str();
-    }
-
-    string Card::signsString(signs sign)
-    {
+        string sgn;
         switch (sign)
         {
-        case Clubs:
-            return "Clubs";
-        case Diamonds:
-            return "Diamonds";
-        case Hearts:
-            return "Hearts";
-        case Spades:
-            return "Spades";
-        default:
-            return "";
+        case signs::Clubs:
+            sgn = "Clubs";
+            break;
+        case signs::Diamonds:
+            sgn = "Diamonds";
+            break;
+        case signs::Hearts:
+            sgn = "Hearts";
+            break;
+        case signs::Spades:
+            sgn = "Spades";
+            break;
         }
+
+        return this->number + " of " + sgn;
+        // stringstream s;
+        // string signString = signsString(this->sign);
+        // s << (this->number + " of " + signString);
+        // return s.str();
     }
+
+    // string Card::signsString(signs sign)
+    // {
+    //     switch (sign)
+    //     {
+    //     case Clubs:
+    //         return "Clubs";
+    //     case Diamonds:
+    //         return "Diamonds";
+    //     case Hearts:
+    //         return "Hearts";
+    //     case Spades:
+    //         return "Spades";
+    //     default:
+    //         return "";
+    //     }
+    // }
 }

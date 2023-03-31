@@ -34,7 +34,7 @@ namespace ariel {
 
         ~Game();
 
-        void generateDeckAndDeal();
+        void generateDeckAndDeal(vector<Card>& p1Stack, vector<Card>& p2Stack);
 
         void playTurn();
 

@@ -19,7 +19,9 @@ namespace ariel
         this->winner = "";
         this->p1.getStack().clear();
         this->p2.getStack().clear();
-        generateDeckAndDeal();
+        vector<Card> p1Stack = p1.getStack();
+        vector<Card> p2Stack = p2.getStack();
+        generateDeckAndDeal(p1Stack, p2Stack);
     }
 
     Game::Game(const Game &game) noexcept : p1(game.p1), p2(game.p2) {}
@@ -32,40 +34,40 @@ namespace ariel
 
     Game::~Game() {}
 
-    void Game::generateDeckAndDeal() // generates regular deck, shuffle it, and deal to players
+    void Game::generateDeckAndDeal(vector<Card> &p1Stack, vector<Card> &p2Stack) // generates regular deck, shuffle it, and deal to players
     {
         vector<Card> deck;
         // generate cards and push into the deck
-        for (int i = 1; i < 14; i++) 
+        for (int i = 1; i < 14; i++)
         {
             for (signs j = Clubs; j <= Spades; j = signs(j + 1))
             {
                 Card newCard(Card(i, j));
                 deck.push_back(newCard);
-                // cout << newCard.toString() << endl; // prints correctly
-                // cout << deck.back().toString() << endl;// prints the same string all the time
             }
         }
-        // shuffle the deck
-        auto e = std::default_random_engine{};
-        shuffle(deck.begin(), deck.end(), e);
-        // // deal the deck
-        for (size_t i = 0; i < deck.size(); i++)
+
+        for (Card c : deck)
         {
-            if (i % 2 == 0)
-            {
-                p1.getStack().push_back(deck[i]);
-                cout << deck[i].toString() << endl;
-            }
-            else 
-            {
-                p2.getStack().push_back(deck[i]);
-                // cout << p2.getStack().back().toString() << endl;
-            }
+            std::cout << c.toString() << " ";
+        }
+
+        // shuffle the deck
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::shuffle(deck.begin(), deck.end(), g);
+
+        // // deal the deck
+        for (int i = 0; i < 26; i++)
+        {
+            p1.pushToStack(deck.back());
+            deck.pop_back();
+            p2.pushToStack(deck.back());
+            deck.pop_back();
         }
     }
 
-    void Game::playTurn() 
+    void Game::playTurn()
     {
         int numberOfCardsThrewInTurn = 2; // in each turn at least 2 cards are thrown
         // both players throw cards
@@ -87,7 +89,7 @@ namespace ariel
             p2Card = p2.putCard();
             // add playes to lastTurnLog
             this->lastTurnLog << "p1 plays " << p1Card.getNumber() << " of " << p1Card.getSign() << " p2 plays " << p2Card.getNumber() << " of " << p2Card.getSign();
-            numberOfCardsThrewInTurn += 4; 
+            numberOfCardsThrewInTurn += 4;
         }
         // both stack-- if can, if player runs out of cards he looses- in putCard()
         // if p1 wins: add cards to taken, win rate++, update win rate
@@ -109,12 +111,12 @@ namespace ariel
         this->lastTurnLog << "";
     }
 
-    void Game::printLastTurn() 
+    void Game::printLastTurn()
     {
         cout << this->lastTurnLog.str() << endl;
     }
 
-    void Game::playAll() 
+    void Game::playAll()
     {
         for (int i = 0; i < 26; i++)
         {
@@ -122,17 +124,17 @@ namespace ariel
         }
     }
 
-    void Game::printWiner() 
+    void Game::printWiner()
     {
         cout << this->winner;
     }
 
-    void Game::printLog() 
+    void Game::printLog()
     {
         cout << this->gameLog << endl;
     }
 
-    void Game::printStats() {} //TODO when tests come
+    void Game::printStats() {} // TODO when tests come
 
     Player Game::getWinner() { return this->winner; }
 }

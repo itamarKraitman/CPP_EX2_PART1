@@ -79,12 +79,16 @@ namespace ariel
 
     void Player::setStack(int numOfCardsToReduce) 
     {
-        this->stackSize -= numOfCardsToReduce;
+        this->stackSize += numOfCardsToReduce;
     }
 
     void Player::setStack(Card card) 
     { 
         this->stack.insert(stack.begin(), card);
+    }
+
+    void Player::pushToStack(const Card& card) {
+        this->stack.push_back(card);
     }
 
     vector<Card> Player::getStack()
